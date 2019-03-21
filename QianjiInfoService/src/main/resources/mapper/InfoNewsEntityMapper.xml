@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianjitec.informations.dao.InfoNewsEntityDao">
+  <resultMap id="BaseResultMap" type="com.qianjitec.informations.entity.InfoNewsEntity">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="news_title" jdbcType="VARCHAR" property="newsTitle" />
+    <result column="picture_cover_path" jdbcType="VARCHAR" property="pictureCoverPath" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="useful_time_b" jdbcType="TIMESTAMP" property="usefulTimeB" />
+    <result column="useful_time_e" jdbcType="TIMESTAMP" property="usefulTimeE" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="is_effected" jdbcType="BIT" property="isEffected" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="urllinks" jdbcType="VARCHAR" property="urlLinks" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime"/>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qianjitec.informations.entity.InfoNewsEntity">
+    <result column="content" jdbcType="CLOB" property="content"/>
+  </resultMap>
+  <!--<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qianjitec.informations.entity.InfoNewsEntity">
+    <result column="content" javaType="java.sql.Blob" jdbcType="BLOB" property="content" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+  </resultMap>-->
+
+  <!-- 前端查询sql -->
+  <sql id="Base_Column_List">
+    id, news_title, picture_cover_path, author, useful_time_b, useful_time_e, order_num,
+    create_time, update_time,urllinks,type,release_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+
+  <!-- 前端查看独家资讯详情 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_info_news
+    <trim prefix="where">
+      <if test="_parameter!=null">
+        id = #{id,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+
+  <!--<insert id="insert" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    insert into t_info_news (id, news_title, picture_cover_path, 
+      author, useful_time_b, useful_time_e, 
+      order_num, is_effected, is_deleted, 
+      create_time, update_time, content
+      )
+    values (#{id,jdbcType=VARCHAR}, #{newsTitle,jdbcType=VARCHAR}, #{pictureCoverPath,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{usefulTimeB,jdbcType=TIMESTAMP}, #{usefulTimeE,jdbcType=TIMESTAMP}, 
+      #{orderNum,jdbcType=INTEGER}, #{isEffected,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=CLOB}
+      )
+  </insert>-->
+
+  <insert id="insertSelective" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    insert into t_info_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="newsTitle != null">
+        news_title,
+      </if>
+      <if test="pictureCoverPath != null">
+        picture_cover_path,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="usefulTimeB != null">
+        useful_time_b,
+      </if>
+      <if test="usefulTimeE != null">
+        useful_time_e,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="isEffected != null">
+        is_effected,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="newsTitle != null">
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCoverPath != null">
+        #{pictureCoverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usefulTimeB != null">
+        #{usefulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usefulTimeE != null">
+        #{usefulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="isEffected != null">
+        #{isEffected,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    update t_info_news
+    <set>
+      <if test="newsTitle != null">
+        news_title = #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCoverPath != null">
+        picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usefulTimeB != null">
+        useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usefulTimeE != null">
+        useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="isEffected != null">
+        is_effected = #{isEffected,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=CLOB},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    update t_info_news
+    set news_title = #{newsTitle,jdbcType=VARCHAR},
+      picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      is_effected = #{isEffected,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=CLOB}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    update t_info_news
+    set news_title = #{newsTitle,jdbcType=VARCHAR},
+      picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      is_effected = #{isEffected,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 前端获取资讯列表 -->
+  <select id="getInfoNewsBySort" parameterType="String" resultMap="ResultMapWithBLOBs">
+    select
+    id, news_title, picture_cover_path,order_num,
+    release_time,urllinks
+    from t_info_news
+    where
+    type = #{type,jdbcType=VARCHAR}
+    and is_effected = 0
+    and is_deleted = 0
+	and (unix_timestamp() between unix_timestamp(useful_time_b)
+	and unix_timestamp(useful_time_e))
+  </select>
+
+
+  <!-- 后台数据 -->
+  <sql id="Backstage_Column_List">
+    id, news_title, picture_cover_path, author, useful_time_b, useful_time_e, order_num,
+    is_effected, create_time, update_time,urllinks,type
+  </sql>
+
+  <sql id = "Backstage_Blob_List">
+    content
+  </sql>
+
+  <!-- 后台查询所有资讯 -->
+  <select id="backstageNews" parameterType="String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Backstage_Column_List"/>
+    ,
+    <include refid="Backstage_Column_List"/>
+    from t_info_news
+    where is_deleted = 0
+    <if test="_parameter!=null">
+      and type = #{type,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <!-- 资讯上下架 -->
+  <update id="ualNews" parameterType="com.qianjitec.informations.model.form.UalNewsForm">
+    update t_info_news set
+    <if test="isEffected != null">
+      is_effected = #{isEffected,jdbcType=BIT}
+    </if>
+    <if test="releaseTime !=null">
+      ,release_time=#{releaseTime,jdbcType=TIMESTAMP}
+    </if>
+    where id=#{id,jdbcType = VARCHAR}
+  </update>
+
+  <!-- 批量删除
+  <insert id="deleteNews" parameterType="ava.util.Map">
+    insert into t_info_news(id,is_deleted) values
+    <foreach collection="map" item="val" index="key">(#{key},#{val}),</foreach>
+    on DUPLICATE key
+    update
+    id=VALUES(id),is_deleted=VALUES(is_deleted)
+  </insert>-->
+
+  <!-- 删除1或多条资讯 -->
+  <update id="deleteOneOrMore" parameterType="com.qianjitec.informations.model.form.NewsDeleteForm">
+    update t_info_news set is_deleted = 1 where id in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <!-- 新增一条资讯 -->
+  <insert id="addOneNews" parameterType="com.qianjitec.informations.entity.InfoNewsEntity">
+    insert into t_info_news (id, news_title, picture_cover_path,
+      author, useful_time_b, useful_time_e,
+      order_num,create_time, update_time, content,urllinks,type
+      )
+    values (
+      #{id,jdbcType=VARCHAR}, #{newsTitle,jdbcType=VARCHAR},
+      #{pictureCoverPath,jdbcType=VARCHAR},#{author,jdbcType=VARCHAR},
+      #{usefulTimeB,jdbcType=TIMESTAMP}, #{usefulTimeE,jdbcType=TIMESTAMP},
+      #{orderNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},#{content,jdbcType=CLOB},
+      #{urlLinks,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!-- 后端更新一条资讯 -->
+  <update id="alterOneNews" parameterType="com.qianjitec.informations.model.form.AlterNewsForm">
+    update t_info_news
+    <trim prefix="set (" suffixOverrides="," suffix=")">
+      <if test="id!=null and id!=''">
+        <if test="newsTile!=null">
+          news_title = #{newsTitle,jdbcType=VARCHAR},
+        </if>
+        <if test="pictureCoverPath!=null">
+          picture_cover_path=#{pictureCoverPath,jdbcType=VARCHAR}
+        </if>
+        <if test="author!=null">
+          author = #{author,jdbcType=VARCHAR}
+        </if>
+        <if test="usefulTimeB!=null">
+          useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP}
+        </if>
+        <if test="usefulTimeE!=null">
+          useful_time_e=#{usefulTimeE,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderNum!=null">
+          order_num = #{orderNum,jdbcType=INTEGER}
+        </if>
+        <if test="createTime!=null">
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateTime!=null">
+          update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="content!=null">
+          content = #{content,jdbcType=CLOB}
+        </if>
+        <if test="urlLinks!=null">
+          urllinks = #{urlLinks,jdbcType=VARCHAR}
+        </if>
+        <if test="type!=null">
+          type = #{type,jdbcType=VARCHAR}
+        </if>
+      </if>
+    </trim>
+    <where>
+      <if test="id!=null and id!=''">
+        id=#{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+
+</mapper>

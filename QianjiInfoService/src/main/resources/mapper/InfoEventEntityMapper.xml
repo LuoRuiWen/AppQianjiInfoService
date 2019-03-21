@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianjitec.informations.dao.InfoEventEntityDao">
+  <resultMap id="BaseResultMap" type="com.qianjitec.informations.entity.InfoEventEntity">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="event_title" jdbcType="VARCHAR" property="eventTitle" />
+    <result column="picture_cover_path" jdbcType="VARCHAR" property="pictureCoverPath" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="useful_time_b" jdbcType="TIMESTAMP" property="usefulTimeB" />
+    <result column="useful_time_e" jdbcType="TIMESTAMP" property="usefulTimeE" />
+    <result column="effect_time_b" jdbcType="TIMESTAMP" property="effectTimeB" />
+    <result column="effect_time_e" jdbcType="TIMESTAMP" property="effectTimeE" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="is_effected" jdbcType="BIT" property="isEffected" />
+    <result column="sign_up_conditions" jdbcType="VARCHAR" property="signUpConditions" />
+    <result column="replenish_conditions" jdbcType="VARCHAR" property="replenishConditions" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime"/>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qianjitec.informations.entity.InfoEventEntity">
+    <result column="content" jdbcType="CLOB" property="content" />
+  </resultMap>
+
+  <!-- 前端活动列表信息sql -->
+  <sql id="Base_Column_List">
+    id, event_title, picture_cover_path, author, useful_time_b, useful_time_e, effect_time_b, 
+    effect_time_e, order_num, is_effected, sign_up_conditions, replenish_conditions, 
+    is_deleted, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_event_main
+    <trim prefix="where">
+      <if test="_parameter!=null">
+        id = #{id,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_event_main
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qianjitec.informations.entity.InfoEventEntity">
+    insert into t_event_main (id, event_title, picture_cover_path, 
+      author, useful_time_b, useful_time_e, 
+      effect_time_b, effect_time_e, order_num, 
+      is_effected, sign_up_conditions, replenish_conditions, 
+      is_deleted, create_time, update_time, 
+      content)
+    values (#{id,jdbcType=VARCHAR}, #{eventTitle,jdbcType=VARCHAR}, #{pictureCoverPath,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{usefulTimeB,jdbcType=TIMESTAMP}, #{usefulTimeE,jdbcType=TIMESTAMP}, 
+      #{effectTimeB,jdbcType=TIMESTAMP}, #{effectTimeE,jdbcType=TIMESTAMP}, #{orderNum,jdbcType=INTEGER}, 
+      #{isEffected,jdbcType=BIT}, #{signUpConditions,jdbcType=VARCHAR}, #{replenishConditions,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qianjitec.informations.entity.InfoEventEntity">
+    insert into t_event_main
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="eventTitle != null">
+        event_title,
+      </if>
+      <if test="pictureCoverPath != null">
+        picture_cover_path,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="usefulTimeB != null">
+        useful_time_b,
+      </if>
+      <if test="usefulTimeE != null">
+        useful_time_e,
+      </if>
+      <if test="effectTimeB != null">
+        effect_time_b,
+      </if>
+      <if test="effectTimeE != null">
+        effect_time_e,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="isEffected != null">
+        is_effected,
+      </if>
+      <if test="signUpConditions != null">
+        sign_up_conditions,
+      </if>
+      <if test="replenishConditions != null">
+        replenish_conditions,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTitle != null">
+        #{eventTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCoverPath != null">
+        #{pictureCoverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usefulTimeB != null">
+        #{usefulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usefulTimeE != null">
+        #{usefulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectTimeB != null">
+        #{effectTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectTimeE != null">
+        #{effectTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="isEffected != null">
+        #{isEffected,jdbcType=BIT},
+      </if>
+      <if test="signUpConditions != null">
+        #{signUpConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishConditions != null">
+        #{replenishConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianjitec.informations.entity.InfoEventEntity">
+    update t_event_main
+    <set>
+      <if test="eventTitle != null">
+        event_title = #{eventTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCoverPath != null">
+        picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usefulTimeB != null">
+        useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usefulTimeE != null">
+        useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectTimeB != null">
+        effect_time_b = #{effectTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectTimeE != null">
+        effect_time_e = #{effectTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="isEffected != null">
+        is_effected = #{isEffected,jdbcType=BIT},
+      </if>
+      <if test="signUpConditions != null">
+        sign_up_conditions = #{signUpConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishConditions != null">
+        replenish_conditions = #{replenishConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=CLOB},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qianjitec.informations.entity.InfoEventEntity">
+    update t_event_main
+    set event_title = #{eventTitle,jdbcType=VARCHAR},
+      picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      effect_time_b = #{effectTimeB,jdbcType=TIMESTAMP},
+      effect_time_e = #{effectTimeE,jdbcType=TIMESTAMP},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      is_effected = #{isEffected,jdbcType=BIT},
+      sign_up_conditions = #{signUpConditions,jdbcType=VARCHAR},
+      replenish_conditions = #{replenishConditions,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=CLOB}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianjitec.informations.entity.InfoEventEntity">
+    update t_event_main
+    set event_title = #{eventTitle,jdbcType=VARCHAR},
+      picture_cover_path = #{pictureCoverPath,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      useful_time_b = #{usefulTimeB,jdbcType=TIMESTAMP},
+      useful_time_e = #{usefulTimeE,jdbcType=TIMESTAMP},
+      effect_time_b = #{effectTimeB,jdbcType=TIMESTAMP},
+      effect_time_e = #{effectTimeE,jdbcType=TIMESTAMP},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      is_effected = #{isEffected,jdbcType=BIT},
+      sign_up_conditions = #{signUpConditions,jdbcType=VARCHAR},
+      replenish_conditions = #{replenishConditions,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 前端获取活动列表 -->
+  <select id="queryEventBySort" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_event_main
+    where
+    is_deleted = 0
+    and is_effected = 0
+    and (unix_timestamp() between unix_timestamp(useful_time_b)
+    and unix_timestamp(useful_time_e))
+  </select>
+</mapper>

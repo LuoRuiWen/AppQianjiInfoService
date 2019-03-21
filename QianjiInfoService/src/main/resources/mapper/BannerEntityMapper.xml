@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianjitec.informations.dao.BannerEntityDao">
+  <resultMap id="BaseResultMap" type="com.qianjitec.informations.entity.BannerEntity">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="picture_path" jdbcType="VARCHAR" property="picturePath" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="userful_time_b" jdbcType="TIMESTAMP" property="userfulTimeB" />
+    <result column="userful_time_e" jdbcType="TIMESTAMP" property="userfulTimeE" />
+    <result column="is_default" jdbcType="VARCHAR" property="isDefault" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="hyperlink" jdbcType="VARCHAR" property="hyperlink" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, title, picture_path, order_num,
+    hyperlink
+  </sql>
+
+
+  <!-- 后端查询sql -->
+  <sql id="Backstage_Column_List">
+    id, title, picture_path, type, userful_time_b, userful_time_e, is_default, order_num,
+    hyperlink, is_deleted, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_info_banner
+    <trim prefix="where">
+      <if test="_parameter!=null">
+       id = #{id,jdbcType=VARCHAR}
+      </if>
+    </trim>
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_info_banner
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qianjitec.informations.entity.BannerEntity">
+    insert into t_info_banner (id, title, picture_path, 
+      type, userful_time_b, userful_time_e, 
+      is_default, order_num, hyperlink, 
+      is_deleted, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{picturePath,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{userfulTimeB,jdbcType=TIMESTAMP}, #{userfulTimeE,jdbcType=TIMESTAMP}, 
+      #{isDefault,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{hyperlink,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qianjitec.informations.entity.BannerEntity">
+    insert into t_info_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="picturePath != null">
+        picture_path,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="userfulTimeB != null">
+        userful_time_b,
+      </if>
+      <if test="userfulTimeE != null">
+        userful_time_e,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="hyperlink != null">
+        hyperlink,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null">
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="userfulTimeB != null">
+        #{userfulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userfulTimeE != null">
+        #{userfulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="hyperlink != null">
+        #{hyperlink,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianjitec.informations.entity.BannerEntity">
+    update t_info_banner
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null">
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="userfulTimeB != null">
+        userful_time_b = #{userfulTimeB,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userfulTimeE != null">
+        userful_time_e = #{userfulTimeE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="hyperlink != null">
+        hyperlink = #{hyperlink,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianjitec.informations.entity.BannerEntity">
+    update t_info_banner
+    set title = #{title,jdbcType=VARCHAR},
+      picture_path = #{picturePath,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      userful_time_b = #{userfulTimeB,jdbcType=TIMESTAMP},
+      userful_time_e = #{userfulTimeE,jdbcType=TIMESTAMP},
+      is_default = #{isDefault,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      hyperlink = #{hyperlink,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 查询非默认banner -->
+  <select id="selectBannerByType" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_info_banner
+    where
+    <if test="_parameter !=null"> type = #{type,jdbcType=VARCHAR} and</if>
+    is_default='2'
+    and is_deleted=0
+    and (unix_timestamp() between unix_timestamp(useful_time_b)
+    and unix_timestamp(useful_time_e))
+  </select>
+
+  <!-- 查询默认banner列表 -->
+  <select id="selectDefaultByType" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_info_banner
+    where
+    <if test="_parameter !=null">type = #{type,jdbcType=VARCHAR} and</if>
+    is_default=1
+  </select>
+</mapper>

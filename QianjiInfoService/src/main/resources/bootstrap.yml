@@ -1,0 +1,36 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8771
+
+########################################################
+# 配置中心
+########################################################
+spring:
+  application:
+    name: AppQianjiInfoService
+  cloud:
+    config:
+      name: qianji-member
+      profile: ${config.profile:local}
+      discovery:
+        enabled: true
+        service-id: AppQianjiConfigService
+
+########################################################
+###注册中心配置
+########################################################
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.uri:http://127.0.0.1:8301/eureka}
+    registryFetchIntervalSeconds: 5
+
+info:
+  name: ${spring.application.name}
